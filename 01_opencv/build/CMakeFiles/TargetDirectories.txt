@@ -1,3 +1,0 @@
-/data/disk2/tmp/005_arm_cpp/01_opencv/build/CMakeFiles/rebuild_cache.dir
-/data/disk2/tmp/005_arm_cpp/01_opencv/build/CMakeFiles/Main.dir
-/data/disk2/tmp/005_arm_cpp/01_opencv/build/CMakeFiles/edit_cache.dir
