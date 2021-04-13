@@ -3,17 +3,40 @@
 
 using namespace cv;
 
+
+void writeMP4File()
+{
+
+  Mat bmp = imread ("./test_1.png");
+
+  int frame = 0;
+  while(frame < 40)
+  {
+    channelVideoWriter.write(bmp);
+    frame++;
+  }
+  channelVideoWriter.release();
+}
+
+
 int main()
 {
 
-  VideoCapture capture;
-  int cvFourcc = CV_FOURCC('M','J','P','G');
   int fps = 24;
+  std::string videoPath = "./test.mp4";
   cv::Size frameSize = cv::Size(800,500);
   bool isColor = true;
+  std::string  gst_writer = "appsrc ! video/x-raw, format=(string)BGR ! \
+                              videoconvert ! video/x-raw, format=(string)I420 ! \
+                              nvvidconv ! video/x-raw(memory:NVMM) ! \
+                              nvv4l2h264enc ! h264parse ! matroskamux ! filesink location=" + videoPath;
+  cv::VideoWriter writer = cv::VideoWriter(gst_writer, cv::VideoWriter::fourcc('a','v','c','1'), fps, frameSize, isColor);
+
+  VideoCapture capture;
+  // int cvFourcc = VideoWriter::fourcc('M','J','P','G');
 
 
-  VideoWriter writer = VideoWriter("../result.avi",  cvFourcc, fps, frameSize, isColor);
+  // VideoWriter writer = VideoWriter("../result.avi",  cvFourcc, fps, frameSize, isColor);
   //capture.open("../../bin/data/1.mp4");
   capture.open("rtspsrc location=\"rtsp://admin:a1234567@192.168.5.51:554/h264/ch1/main/av_stream\" latency=10 ! rtph264depay ! h264parse ! omxh264dec ! videoconvert ! appsink");
 
@@ -45,6 +68,6 @@ int main()
           break;
       }
       // writer.writer();
-      writer<< frame;
+      writer << frame;
   }
 }
