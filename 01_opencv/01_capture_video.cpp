@@ -7,8 +7,16 @@ int main()
 {
 
   VideoCapture capture;
+  int cvFourcc = CV_FOURCC('M','J','P','G');
+  int fps = 24;
+  cv::Size frameSize = cv::Size(800,500);
+  bool isColor = true;
+
+
+  VideoWriter writer = VideoWriter("../result.avi",  cvFourcc, fps, frameSize, isColor);
   //capture.open("../../bin/data/1.mp4");
   capture.open("rtspsrc location=\"rtsp://admin:a1234567@192.168.5.51:554/h264/ch1/main/av_stream\" latency=10 ! rtph264depay ! h264parse ! omxh264dec ! videoconvert ! appsink");
+
 
 
   // image_width = 1920
@@ -36,7 +44,7 @@ int main()
       {
           break;
       }
-      imshow("test", frame);
-      waitKey(30);
+      // writer.writer();
+      writer<< frame;
   }
 }
