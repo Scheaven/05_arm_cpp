@@ -4,21 +4,6 @@
 using namespace cv;
 
 
-void writeMP4File()
-{
-
-  Mat bmp = imread ("./test_1.png");
-
-  int frame = 0;
-  while(frame < 40)
-  {
-    channelVideoWriter.write(bmp);
-    frame++;
-  }
-  channelVideoWriter.release();
-}
-
-
 int main()
 {
 
